@@ -6,8 +6,10 @@ import {
     fetchPostsIfNeeded,
     invaildateSubrreddit
 } from './reddit-actions'
-import Picker from './subreddit-Picker'
-import Posts from './subreddit-Posts'
+
+/** Component  */
+import Picker from './reddit-Picker'
+import Posts from './reddit-Posts'
 
 class AsyncApp extends Component {
     constructor(props) {
@@ -35,7 +37,6 @@ class AsyncApp extends Component {
 
     handleRefreshClick(e) {
         e.preventDefault()
-
         const { dispatch, selectedSubreddit } = this.props
         dispatch(invaildateSubrreddit(selectedSubreddit))
         dispatch(fetchPostsIfNeeded(selectedSubreddit))
@@ -61,10 +62,10 @@ class AsyncApp extends Component {
                             Refresh
                         </a> }
                 </p>
-                { isFetching && posts.length == 0 && <h2> Loading .. </h2> }
-                { !isFetching && posts.length == 0 && <h2> Empty. </h2> }
+                { isFetching && posts.length === 0 && <h2> Loading .. </h2> /**show fetching */}
+                { !isFetching && posts.length === 0 && <h2> Empty. </h2> /**show error. */}
                 { posts.length > 0 && 
-                    <div style={{ opacity: issFetching ? 0.5 : 1 }} >
+                    <div style={{ opacity: isFetching ? 0.5 : 1 }} >
                         <Posts posts={posts } />
                     </div> } 
             </div>
@@ -82,13 +83,14 @@ AsyncApp.propTypes = {
 
 function mapStateToProps(state) {
     const { selectedSubreddit, postsBySubreddit } = state
+    console.log("mapStateToProps");
     const {
         isFetching,
         lastUpdated,
-        items: posts
-    } = postsBySubreddit[selectedSubreddit] || {
+        items: posts // items => posts in const 
+    } = postsBySubreddit[selectedSubreddit] || { // <== this default starter
         isFetching: true,
-        item: []
+        items: []
     }
 
     return {

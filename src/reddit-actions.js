@@ -21,7 +21,7 @@ export function invaildateSubrreddit(subreddit) {
 
 export function requestPosts(subreddit) {
     return {
-        type: REQUEST_POST,
+        type: REQUEST_POSTS,
         subreddit
     }
 }
@@ -32,7 +32,7 @@ export function receivePosts(subreddit, json) {
         type: RECEIVE_POSTS,
         subreddit,
         posts: json.data.children.map(child => child.data),
-        receivedAt: Data.new()
+        receivedAt: Date.now()
     }
 }
 

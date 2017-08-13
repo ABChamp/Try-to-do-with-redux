@@ -4,14 +4,14 @@ import {
     INVALIDATE_SUBREDDIT,
     REQUEST_POSTS,
     RECEIVE_POSTS
-} from '../reddit-actions'
-
+} from './reddit-actions'
 
 function selectedSubreddit(state = "reactjs", action) {
     switch (action.type) {
         case SELECT_SUBREDDIT:
             return action.subreddit
         default:
+            console.log("reducers@selectedSubreddit" + state);
             return state
     }
 }
@@ -25,16 +25,16 @@ function posts(
 ) {
     switch(action.type) {
         case INVALIDATE_SUBREDDIT:
-            return object.assign({}, state, {
+            return Object.assign({}, state, {
                 didInvlidate: true
             })
         case REQUEST_POSTS:
-            return object.assign({}, state, {
+            return Object.assign({}, state, {
                 isFetching: true,
                 didInvlidate: false
             })
         case RECEIVE_POSTS:
-            return object.assign({}, state, {
+            return Object.assign({}, state, {
                 isFetching: false,
                 didInvlidate: false,
                 items: action.posts,
@@ -48,8 +48,11 @@ function posts(
 function postsBySubreddit(state = {}, action) {
     switch (action.type) {
         case INVALIDATE_SUBREDDIT:
-        case RECEIVE_POST:
+        case RECEIVE_POSTS:
         case REQUEST_POSTS:
+            // console.log("postsBySubreddit");
+            // console.log(action.subreddit);
+            // console.log({[action.subreddit]: posts(state[action.subreddit], action)});
             return Object.assign({}, state, {
                 [action.subreddit]: posts(state[action.subreddit], action)
             })

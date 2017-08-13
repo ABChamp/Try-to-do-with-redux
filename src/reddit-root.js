@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Proviider } from 'react-redux'
+import { Provider } from 'react-redux'
 import configureStore from './reddit-configureStore'
 import AsyncApp from './reddit-AsyncApp'
 
